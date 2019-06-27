@@ -2,6 +2,7 @@
 #include <cmath>
 #include "md5.h"
 #include <fstream>
+#include <windows.h>
 using namespace std;
 
 string encrypt(string src)
@@ -25,10 +26,14 @@ int main(int argc, char* argv[])
 	if (argc == 1)
 	{
 		file << "$";
+		file.close();
+		SetFileAttributes("cache", FILE_ATTRIBUTE_HIDDEN + FILE_ATTRIBUTE_SYSTEM);
 		return 0;
 	}
 	string passwd = argv[1];
 	string md5 = encrypt(passwd);
 	file << md5;
+	file.close();
+	SetFileAttributes("cache", FILE_ATTRIBUTE_HIDDEN + FILE_ATTRIBUTE_SYSTEM);
 	return 0;
 }
